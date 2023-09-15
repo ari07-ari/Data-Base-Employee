@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
     host: '127.0.0.1',
     port: 3306,
     user: 'root',
-    password: 'Limonconsal03',
+    password: '', //add sql password to make the code work
     database: 'department_db'
 });
 
