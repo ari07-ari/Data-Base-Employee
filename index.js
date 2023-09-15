@@ -13,9 +13,9 @@ const connection = mysql.createConnection({
     database: 'department_db'
 });
 
-// //A set of questions that the user needs to answer in the terminal
-function options() {
 
+function options() {
+//A set of questions that the user needs to answer in the terminal
     inquirer
         .prompt([
             {
@@ -26,37 +26,42 @@ function options() {
             },
         ])
 
+        //obtain the data from the prompt
         .then((data) => {
 
+            //statement for if the user views the departments table
             if (data.pick == 'View all departments') {
                 connection.query(
                     'select * from department;',
                     function (err, results, fields) {
-                        console.table(results); // results contains rows returned by server
+                        console.table(results); // Displays the final result
                         console.log(err);
-                        options();
+                        options();//calls back to the top, repeats the prompt
                     });
             }
+            //statement for if the user views the roles table
             else if (data.pick == "View all roles") {
                 connection.query(
                     'select * from role;',
                     function (err, results, fields) {
-                        console.table(results); // results contains rows returned by server
+                        console.table(results); // Displays the final result
                         console.log(err);
-                        options();
+                        options();//calls back to the top, repeats the prompt
                     });
             }
+            //statement for if the user views the employees table
             else if (data.pick == "View all employees") {
                 connection.query(
                     'select * from employee;',
                     function (err, results, fields) {
-                        console.table(results); // results contains rows returned by server
+                        console.table(results); // Displays the final result
                         console.log(err);
-                        options();
+                        options();//calls back to the top, repeats the prompt
                     });
             }
+            //statement for if the user wants to add a department to the department table
             else if (data.pick == "Add a department") {
-
+                //prompt to obtain more data
                 inquirer
                     .prompt([
                         {
@@ -68,18 +73,18 @@ function options() {
 
                     .then((data) => {
                         const department = data.department;
-
                         connection.query(
                             'insert into department (department_name) values (' + '"' + department + '"' + ');',
                             function (err, results) {
-                                err ? console.log(err) : console.log('Added Department Success!')
-                                options();
+                                err ? console.log(err) : console.log('Added Department Success!') // Displays a comment
+                                options();//calls back to the top, repeats the prompt
                             });
                     });
 
             }
+            //statement for if the user wants to add a role to the role table
             else if (data.pick == "Add a role") {
-
+                //prompt to obtain more data
                 inquirer
                     .prompt([
                         {
@@ -107,13 +112,15 @@ function options() {
                         connection.query(
                             'insert into role (title,salary,department_id) values (' + '"' + title + '"' + ',' + '"' + salary + '"' + ',' + department_id +');',
                             function (err, results) {
-                                err ? console.log(err) : console.log('Added a Role Success!')
-                                options();
+                                err ? console.log(err) : console.log('Added a Role Success!')// Displays a comment
+                                options();//calls back to the top, repeats the prompt
                             });
                     });
 
             }
+            //statement for if the user wants to add an employee to the employees table
             else if (data.pick == "Add an employee") {
+                //prompt to obtain more data
                 inquirer
                     .prompt([
                         {
@@ -147,15 +154,16 @@ function options() {
                         connection.query(
                             'insert into employee (first_name,last_name,role_id,manager_id) values (' + '"' + first_name + '"' + ',' + '"' + last_name + '"' + ',' + role_id + ',' + manager_id + ');',
                             function (err, results) {
-                                err ? console.log(err) : console.log('Added an Employee Success!')
-                                options();
+                                err ? console.log(err) : console.log('Added an Employee Success!')// Displays a comment
+                                options();//calls back to the top, repeats the prompt
                             });
 
 
                     });
             }
+            //statement for if the user wants to update an employee's role to the employees table
             else if (data.pick == "Update an employee role") {
-
+                //prompt to obtain more data
                 inquirer
                     .prompt([
                         {
@@ -177,12 +185,13 @@ function options() {
                         connection.query(
                             'update employee set role_id =' + first + ' where id=' + second + ';',
                             function (err, results) {
-                                err ? console.log(err) : console.log('Updated Employee Success!')
-                                options();
+                                err ? console.log(err) : console.log('Updated Employee Success!')// Displays a comment
+                                options(); //calls back to the top, repeats the prompt
                             });
                     });
 
             }
+            //statement if the user decides to end the prompt and finish execution
             else {
                 console.log("Bye");
                 process.exit();
