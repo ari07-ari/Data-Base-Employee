@@ -13,18 +13,7 @@ const connection = mysql.createConnection({
     database: 'department_db'
 });
 
-// simple query
-// connection.query(
-//   'select * from department',
-//   function(err, results, fields) {
-//     console.log(results); // results contains rows returned by server
-//     console.log(err);
-//   }
-// );
-
-
 // //A set of questions that the user needs to answer in the terminal
-
 function options() {
 
     inquirer
@@ -171,21 +160,22 @@ function options() {
                     .prompt([
                         {
                             type: 'input',
-                            name: "number1",
-                            message: 'What is the employee role you wish to update it to? (type a number)',
+                            name: "second",
+                            message: 'What is the employee id (position) you want to change? (type a number)',
                         },
                         {
                             type: 'input',
-                            name: "number2",
-                            message: 'What is the employee role you wish to change? (type a number)',
+                            name: "first",
+                            message: 'What is the new employee role you wish to update it to? (type a number)',
                         },
+                        
                     ])
 
                     .then((data) => {
-                        const number1 = data.title;
-                        const number2 = data.salary;
+                        const first = data.first;
+                        const second = data.second;
                         connection.query(
-                            'update employee set role_id =' + number1 + ' where id=' + number2 + ';',
+                            'update employee set role_id =' + first + ' where id=' + second + ';',
                             function (err, results) {
                                 err ? console.log(err) : console.log('Updated Employee Success!')
                                 options();
